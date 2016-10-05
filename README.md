@@ -6,13 +6,17 @@ Takes your CSV file, parses it and returns duplicate data sets.
 
     npm install
 
+###To Start Server###
+
+    npm run dev
+
 Go to:
 
     http://localhost:3000
 
 ###To Run Unit Tests###
 
-    npm test
+    npm run test
 
 ###Notes on Process###
 
