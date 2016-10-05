@@ -6,7 +6,7 @@ module.exports.initDatabase = function() {
   Account.remove().exec(); // clear database
 
   Account.collection.insertMany( demoData, function(err, r) {
-
+    
     if (err) {
       console.log( "error loading demo data: ", err);
     }

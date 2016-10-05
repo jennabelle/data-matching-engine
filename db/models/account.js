@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// TODO: Make ID unique!! Improve this
 var accountSchema = new Schema({
 	id: String,
 	name: String,
