@@ -1,43 +1,35 @@
 const express = require('express');
 const path = require('path');
-const port = process.env.PORT || 8080;
-const app = express();
 // const csv = require('./data/crm.csv');
-const parse = require('csv-parse');
+const csv = require('csv');
 const demoData = require('./db/demo_data.js');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const fs = require('fs');
 
-// use environment variables
-dotenv.config();
+dotenv.config(); // use environment variables
 
-// db connection
+const app = express();
+const port = process.env.PORT || 8080;
 const dbURI = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@ds049436.mlab.com:49436/data-matching-engine`;
 
-// serve static files like index.html, css etc.
 app.use(express.static(__dirname));
 
 app.get('*', (req, res) => {
 
-  // var output = [];
-  // var parser = parse(csv, { delimiter: ',' }); // create the parser
+  var readable = fs.createReadStream(__dirname + '/data/crm.csv', { encoding: 'utf8' });
 
-  // parser.on('readable', function() {
-  //   while(record = parser.read()) {
-  //     output.push(record);
-  //   }
-  // });
+  var writable = fs.createWriteStream(__dirname + '/data/output.txt');
 
-  // // catch any error
-  // paraser.on('error', function(err) {
-  //   console.log('error: ', err.message);
-  // });
-
-  // parser.end();
+  readable.on('data', function(chunk) {
+    console.log(chunk);
+    writable.write(chunk);
+  });
 
 	res.sendFile(path.resolve(__dirname), 'index.html');
 });
 
+// seed database w initial records when server starts
 var server = app.listen(port, function() {
 
   console.log('Server started on port: ', port);
@@ -51,7 +43,7 @@ var server = app.listen(port, function() {
 
   mongoose.connection.on('connected', function() {
     console.log('successful db connection to: ', dbURI, '\n');
-    demoData.initDatabase(); // clear database, and seed db
+    demoData.initDatabase(); // clear database, then seed db
   });
 
 });
