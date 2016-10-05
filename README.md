@@ -12,7 +12,7 @@ Takes your CSV file, parses it and returns duplicate data sets.
 
 Go to:
 
-    http://localhost:3000
+    http://localhost:8080/webpack-dev-server
 
 ###To Run Unit Tests###
 
