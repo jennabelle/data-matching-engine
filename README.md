@@ -25,4 +25,11 @@ Go to:
 ###Tech Stack###
 
     Node.js
-    ES6
+    ES6?
+    Babel?
+    Mongoose.js
+    MongoDB
+    Express
+    Webpack
+    Webpack-dev-server
+    DotEnv
