@@ -5,6 +5,7 @@ const app = express();
 const csv = require('./data/crm.csv');
 const parse = require('csv-parse');
 const estraverse = require('estraverse');
+const internalDB = require('./db/db.json');
 
 app.use(express.static(__dirname));
 
