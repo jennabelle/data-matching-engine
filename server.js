@@ -23,17 +23,50 @@ app.get('*', (req, res) => {
 
   var writable = fs.createWriteStream(__dirname + '/data/output.txt');
 
+  // var afterQueryCallback = function(err, person) {
+  //   if (err) {
+  //     console.log('error in query! err: ', err);
+  //   }
+  //   writable.write(`id: ${person.id}, name: ${person.name}\n`);
+  // }
+
   csv
     .fromStream(readable, { headers: ['name', 'url'] })
     .on('data', function(data) {
-      
+      console.log('data.name: ', data.name);
+
+      Account.find({
+        $or: [ 
+          {
+            name: data.name
+          }
+        ]
+      }, 'id name', function(err, acct) {
+        console.log('found acct: ', acct);
+
+        if (err) {
+          console.log('error in query! err: ', err);
+        }
+        if (acct.length > 0) {
+
+          for (var i = 0; i < acct.length; i++) {
+            writable.write(`id: ${acct[i].id}, name: ${acct[i].name}, `);
+          }
+
+          writable.write('\n'); // insert new line
+        }
+        else {
+          writable.write('\n'); // if query returned no records
+        }
+
+      });
+
     })
     .on('end', function() {
       console.log('done!');
     });
 
   // readable.pipe(writable);
-
 
 	res.sendFile(path.resolve(__dirname), 'index.html');
 });
