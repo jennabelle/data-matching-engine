@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const Account = require('./db/models/account.js');
+const RegExHelper = require('./helpers/helper_regex.js');
+const setupController = require('./controllers/setupController.js');
 
 dotenv.config(); // use environment variables
 
@@ -17,63 +19,59 @@ const dbURI = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_P
 
 app.use(express.static(__dirname));
 
-app.get('*', (req, res) => {
+// app.get('*', (req, res) => {
 
-  var readable = fs.createReadStream(__dirname + '/data/crm.csv');
-  var writable = fs.createWriteStream(__dirname + '/data/output.txt');
+//   var readable = fs.createReadStream(__dirname + '/data/crm.csv');
+//   var writable = fs.createWriteStream(__dirname + '/data/output.txt');
 
-  // first line should be 'Matches'
-  writable.write('Matches\n');
+//   // first line should be 'Matches'
+//   writable.write('Matches\n');
 
-  // escape reg exp brackets '/' to get value of variable
-  function escapeRegExp(string){
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-  }
+//   // after query callback
+//   var afterQueryCallback = function(err, acct) {
 
-  csv
-    .fromStream(readable, { headers: ['name', 'url'] })
-    .on('data', function(data) {
+//     console.log('\nafter query, found acct: ', acct);
 
-      Account.find({
-        $or: [ 
-          {
-            name: new RegExp( escapeRegExp(data.name), "i" )
-          }
-        ]
-      }, 'id name', function(err, acct) {
+//     if (err) {
+//       console.log('error in query! err: ', err);
+//     }
+//     if (acct.length > 0) {
 
-        console.log('\nafter query, found acct: ', acct);
+//       // multiple matches found
+//       for (var i = 0; i < acct.length; i++) {
+//         writable.write(`id: ${acct[i].id}, name: ${acct[i].name}`);
 
-        if (err) {
-          console.log('error in query! err: ', err);
-        }
-        if (acct.length > 0) {
+//         // only add comma if more matches per row
+//         if (acct[i + 1] !== undefined) {
+//           writable.write(', ');
+//         }
+//       }
 
-          // multiple matches found
-          for (var i = 0; i < acct.length; i++) {
-            writable.write(`id: ${acct[i].id}, name: ${acct[i].name} `);
+//       writable.write('\n'); // insert new line after ea row
+//     }
+//     else {
 
-            // only add comma if there are more matches
-            if (acct[i + 1] !== undefined) {
-              writable.write(', ');
-            }
-          }
+//       writable.write('\n'); // if query returned no records
+//     }
+//   }
 
-          writable.write('\n'); // insert new line after ea row
-        }
-        else {
-          writable.write('\n'); // if query returned no records
-        }
+//   // parse csv
+//   csv
+//     .fromStream(readable, { headers: ['name', 'url'] })
+//     .on('data', function(data) {
 
-      });
-
-    })
-    .on('end', function() {
-      console.log('done!');
-    });
-
-	res.sendFile(path.resolve(__dirname), 'index.html');
-});
+//       Account.find({ // TODO: Polish!
+//         $or: [ 
+//           {
+//             name: new RegExp( RegExHelper.escapeRegEx(data.name), "i" )
+//           }
+//         ]
+//       }, 'id name', afterQueryCallback);
+//     })
+//     .on('end', function() {
+//       console.log('done!');
+//     });
+// });
 
 // seed database w initial records when server starts
 var server = app.listen(port, function() {
@@ -85,11 +83,16 @@ var server = app.listen(port, function() {
       console.log('\nERROR! Unable to connect to: ', dbURI, ': ', error);
       server.close();
     }
+    else {
+      console.log('successful db connection to: ', dbURI, '\n');
+    }
   });
 
-  mongoose.connection.on('connected', function() {
-    console.log('successful db connection to: ', dbURI, '\n');
-    demoData.initDatabase(); // clear database, then seed db
-  });
+  setupController(app);
+
+  // mongoose.connection.on('connected', function() {
+    
+  //   demoData.initDatabase(); // clear database, then seed db
+  // });
 
 });
