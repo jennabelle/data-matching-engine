@@ -8,11 +8,11 @@ Takes your CSV file, parses it, and returns a list of same records that exist in
 
 ###To Start Server###
 
-    npm run dev
+    npm start
 
 Go to:
 
-    http://localhost:8080/webpack-dev-server
+    http://localhost:8080/api/setupAccounts
 
 ###To Run Unit Tests###
 
@@ -25,11 +25,11 @@ Go to:
 ###Tech Stack###
 
     Node.js
-    ES6?
-    Babel?
+    ES6
+    Babel
     Mongoose.js
     MongoDB
     Express
     Webpack
-    Webpack-dev-server
+    fast-csv
     DotEnv

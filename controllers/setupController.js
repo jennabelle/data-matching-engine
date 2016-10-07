@@ -16,8 +16,10 @@ module.exports = function(app) {
 			}
 			else {
 				console.log('seeded database with ', results.insertedCount, " records\n");
-				parseCSVController(); // parse csv
-				res.send(results['ops']);
+				
+				// parse csv
+				parseCSVController();
+				res.send( results['ops'] );
 			}
 		});
 	});

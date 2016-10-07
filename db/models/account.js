@@ -1,10 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// TODO: Make ID unique!! Improve this
 var accountSchema = new Schema({
-	id: String,
-	name: String,
+	id: { type: String, required: true, unique: true, index: true }, // external key
+	name: { type: String, required: true },
 	corporate_names: [],
 	fka_names: [],
 	products: [],

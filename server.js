@@ -14,13 +14,13 @@ const dbURI = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_P
 app.use(express.static(__dirname));
 
 // start server
-var server = app.listen(port, function() {
+var server = app.listen(port, () => {
 
   console.log('Server started on port: ', port);
 
   // connect to db
-  mongoose.connect(dbURI, function(error) {
-    
+  mongoose.connect(dbURI, error => {
+
     if (error) {
       console.log('\nERROR! Unable to connect to: ', dbURI, ': ', error);
       server.close();
@@ -30,7 +30,6 @@ var server = app.listen(port, function() {
     }
   });
 
-  // seed db
+  // set up app
   setupController(app);
-
 });

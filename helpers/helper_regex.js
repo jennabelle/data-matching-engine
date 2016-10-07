@@ -4,4 +4,4 @@ module.exports = {
 	escapeRegEx: function(str) {
 		return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 	}
-}
+};

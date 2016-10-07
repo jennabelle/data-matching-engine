@@ -12,49 +12,63 @@ module.exports = function() {
 	writable.write('Matches\n');
 
 	// after query callback
-	var afterQueryCallback = function(err, acct) {
-
-		console.log('\nafter query, found acct: ', acct);
+	var writeToOutput = (err, accts) => {
 
 	    if (err) {
 	      console.log('error in query! err: ', err);
 	    }
-	    if (acct.length > 0) {
+	    if (accts.length > 0) {
 
 			// multiple matches found
-			for (var i = 0; i < acct.length; i++) {
+			for (var i = 0; i < accts.length; i++) {
 
-				writable.write(`id: ${acct[i].id}, name: ${acct[i].name}`);
+				writable.write(`id: ${accts[i].id}, name: ${accts[i].name}, urls: ${accts[i].urls}`);
 
 				// only add comma if more matches per row
-		        if (acct[i + 1] !== undefined) {
+		        if ( accts[i + 1] !== undefined ) {
 					writable.write(', ');
 		        }
 			}
 
 			// insert new line after ea row
-			writable.write('\n'); 
+			writable.write( '\n' ); 
 	    }
 	    else {
 
 	    	// if query returned no records
-	      	writable.write('\n'); 
+	      	writable.write( '\n' ); 
 	    }
+  	};
+
+  	// generator to handle async calls in synchronous ways
+  	function *findMatches(data) {
+
+		yield Account.find({ // TODO: Polish!
+		    $and: [
+				{
+					name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" )
+				},
+				{ // nothing or matches the end!
+					urls: new RegExp( RegExHelper.escapeRegEx(data.URL), "i" )
+				}
+			]}, 'id name urls', writeToOutput);
   	};
 
   	// parse csv
   	csv
-    	.fromStream(readable, { headers: ['name', 'url'] })
-    	.on('data', function(data) {
+    	.fromStream(readable, { headers: true })
+    	.on('data', data => { console.log('data.Name: ', data.Name, ' data.URL: ', data.URL);
 
-	      	Account.find({ // TODO: Polish!
-	        	$or: [ 
-	          		{
-	            		name: new RegExp( RegExHelper.escapeRegEx(data.name), "i" )
-	          		}
-	        	]}, 'id name', afterQueryCallback);
+    		// call generator
+    		const gen = findMatches(data);
+    		gen.next();
     	})
-    	.on('end', function() {
+    	.on('end', () => {
       		console.log('done!');
     	});
 };
+
+
+
+
+
