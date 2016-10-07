@@ -20,7 +20,6 @@ app.use(express.static(__dirname));
 app.get('*', (req, res) => {
 
   var readable = fs.createReadStream(__dirname + '/data/crm.csv');
-
   var writable = fs.createWriteStream(__dirname + '/data/output.txt');
 
   // first line should be 'Matches'
@@ -34,8 +33,6 @@ app.get('*', (req, res) => {
   csv
     .fromStream(readable, { headers: ['name', 'url'] })
     .on('data', function(data) {
-
-      console.log('data: ', data);
 
       Account.find({
         $or: [ 
@@ -54,7 +51,12 @@ app.get('*', (req, res) => {
 
           // multiple matches found
           for (var i = 0; i < acct.length; i++) {
-            writable.write(`id: ${acct[i].id}, name: ${acct[i].name}, `);
+            writable.write(`id: ${acct[i].id}, name: ${acct[i].name} `);
+
+            // only add comma if there are more matches
+            if (acct[i + 1] !== undefined) {
+              writable.write(', ');
+            }
           }
 
           writable.write('\n'); // insert new line after ea row
