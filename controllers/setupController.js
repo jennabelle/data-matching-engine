@@ -1,4 +1,5 @@
-var Account = require('../db/models/account.js');
+const Account = require('../db/models/account.js');
+const parseCSVController = require('./parseCSVController.js');
 
 module.exports = function(app) {
 
@@ -14,8 +15,9 @@ module.exports = function(app) {
 				console.log('error loading demo data: ', err);
 			}
 			else {
-				res.send(results['ops']);
 				console.log('seeded database with ', results.insertedCount, " records\n");
+				parseCSVController(); // parse csv
+				res.send(results['ops']);
 			}
 		});
 	});
