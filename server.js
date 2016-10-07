@@ -23,37 +23,41 @@ app.get('*', (req, res) => {
 
   var writable = fs.createWriteStream(__dirname + '/data/output.txt');
 
-  // var afterQueryCallback = function(err, person) {
-  //   if (err) {
-  //     console.log('error in query! err: ', err);
-  //   }
-  //   writable.write(`id: ${person.id}, name: ${person.name}\n`);
-  // }
+  // first line should be 'Matches'
+  writable.write('Matches\n');
+
+  // escape reg exp brackets '/' to get value of variable
+  function escapeRegExp(string){
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
 
   csv
     .fromStream(readable, { headers: ['name', 'url'] })
     .on('data', function(data) {
-      console.log('data.name: ', data.name);
+
+      console.log('data: ', data);
 
       Account.find({
         $or: [ 
           {
-            name: data.name
+            name: new RegExp( escapeRegExp(data.name), "i" )
           }
         ]
       }, 'id name', function(err, acct) {
-        console.log('found acct: ', acct);
+
+        console.log('\nafter query, found acct: ', acct);
 
         if (err) {
           console.log('error in query! err: ', err);
         }
         if (acct.length > 0) {
 
+          // multiple matches found
           for (var i = 0; i < acct.length; i++) {
             writable.write(`id: ${acct[i].id}, name: ${acct[i].name}, `);
           }
 
-          writable.write('\n'); // insert new line
+          writable.write('\n'); // insert new line after ea row
         }
         else {
           writable.write('\n'); // if query returned no records
@@ -65,8 +69,6 @@ app.get('*', (req, res) => {
     .on('end', function() {
       console.log('done!');
     });
-
-  // readable.pipe(writable);
 
 	res.sendFile(path.resolve(__dirname), 'index.html');
 });
