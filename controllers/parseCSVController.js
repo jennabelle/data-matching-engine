@@ -5,8 +5,8 @@ const RegExHelper = require('../helpers/helper_regex.js');
 
 module.exports = function() {
 
-	var readable = fs.createReadStream(__dirname + '/crm.csv');
-  	var writable = fs.createWriteStream(__dirname + '/output.txt');
+	var readable = fs.createReadStream(__dirname + '/../data/crm.csv');
+  	var writable = fs.createWriteStream(__dirname + '/../data/output.txt');
 
 	// first line should be 'Matches'
 	writable.write('Matches\n');
