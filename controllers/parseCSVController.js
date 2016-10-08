@@ -22,7 +22,7 @@ module.exports = function() {
 			// multiple matches found
 			for (var i = 0; i < accts.length; i++) {
 
-				writable.write(`id: ${accts[i].id}`);
+				writable.write(`${accts[i].id}`);
 
 				// only add comma if more matches per row
 		        if ( accts[i + 1] !== undefined ) {

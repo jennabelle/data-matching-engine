@@ -4,8 +4,16 @@ Takes your CSV file, parses it, and returns a list of same records that exist in
 
 ###Screenshots
 
+Input:
+
 <span width="30px" height="30px"><img src="./src/images/Input.png"></span>
+
+Output:
+
 <span width="30px" height="30px"><img src="./src/images/Output.png"></span>
+
+Output:
+
 
 ###Getting Started
 
@@ -18,6 +26,10 @@ Takes your CSV file, parses it, and returns a list of same records that exist in
 Go to:
 
     http://localhost:8080/api/setupAccounts
+
+Check that matching records are displayed. Go to:
+
+    db/output.txt
 
 ###To Run Unit Tests
 
