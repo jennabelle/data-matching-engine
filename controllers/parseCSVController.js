@@ -40,18 +40,28 @@ module.exports = function() {
 	    }
   	};
 
-  	// generator to handle async calls in synchronous ways
+  	// generator to handle async calls in synchronous way
   	function *findMatches(data) {
 
-		yield Account.find({ // TODO: Polish!
-		    $and: [
-				{
-					name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" )
-				},
-				{ // nothing or matches the end!
-					urls: new RegExp( RegExHelper.escapeRegEx(data.URL), "i" )
-				}
-			]}, 'id name urls', writeToOutput);
+		yield Account.find({
+				$or: [
+						{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
+						{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
+						{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
+					]}, 'id name urls', writeToOutput);
+
+		// yield Account.find({
+		// 		$and: [
+		// 			{ 	$or: [
+		// 					{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
+		// 					{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
+		// 					{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
+		// 				]
+		// 			},
+		// 			{
+		// 				urls: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.URL), "i" ) ] }
+		// 			}
+		// 		]}, 'id name urls', writeToOutput);
   	};
 
   	// parse csv
@@ -67,8 +77,3 @@ module.exports = function() {
       		console.log('done!');
     	});
 };
-
-
-
-
-

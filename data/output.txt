@@ -1,0 +1,17 @@
+Matches
+id: 5130efc88989846a36000b42, name: Meraki, urls: meraki.cisco.com,meraki.com,meraki.net
+id: 515103cc2857b57a510c8745, name: The Climate Corporation, urls: climate.com,weatherbill.com
+id: 5654e9f85cfc3b3461078207, name: Intercom Online Inc, urls: intercom.com,intercomonline.com, id: 5130f0688989846a3602182e, name: Intercom, urls: intercom.io,blog.intercom.io
+id: 5130efcd8989846a36001c04, name: McKinsey & Company, urls: mckinsey.com,mckinseysolutions.com,objectivehealth.com,mckinseychina.com,solutions.mckinsey.com
+
+id: 5130efc48989846a3600041e, name: Lending Club, urls: lendingclub.com
+id: 53af5b44bf9923352a06924b, name: Periscope, urls: periscope.com.tr, id: 557b3ffc560c0d3c1400115b, name: Periscope, urls: periscopeit.co.uk, id: 5130f0238989846a3601300e, name: Periscope, urls: periscope.com, id: 55c24e0d6dab3f8a5d0002c9, name: Periscope, urls: periscope.tv,periscopeapp.co
+
+id: 5130f0bb8989846a360348d0, name: Gusto, urls: gusto.com,zenpayroll.com
+id: 5130efff8989846a3600b366, name: Walmart, urls: walmart.com,careers.walmart.com,walmartcareers.com,wal-martrealty.com,corporate.walmart.com,walmartstores.com,wal-mart.com
+id: 5130f01f8989846a3601219a, name: UberMedia, urls: ubermedia.com, id: 5130f02c8989846a36014832, name: Uber, urls: uber.com
+
+id: 5130efec8989846a36007644, name: Netezza, urls: netezza.com,thinking.netezza.com,
+id: 535b48185bf2732308000209, name: Slack, urls: slack.com
+id: 51c6b9a5a9812aa90b123980, name: DataFox, urls: datafox.com,datafox.co,app.datafox.com, id: 56bd004737f55c275a55a980, name: Datafox, urls: datafox.de
+id: 5130f0118989846a3600efee, name: WePay, urls: go.wepay.com,wepay.com

@@ -31,5 +31,5 @@ var server = app.listen(port, () => {
   });
 
   // set up app
-  setupController(app);
+  setupController(app);  
 });

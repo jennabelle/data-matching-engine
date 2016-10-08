@@ -23,7 +23,7 @@ module.exports = function(app) {
 			}
 		});
 	});
-}
+};
 
 var demoData = [
   {"id":"5130efe18989846a36005a94","name":"Neustar","corporate_names":["Neustar, Inc.","NeuStar Inc."],"fka_names":[],"products":[],"urls":["neustar.biz","neusentry.biz","browsermob.com"],"acquirer":null},
