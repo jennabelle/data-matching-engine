@@ -14,12 +14,12 @@ module.exports = function() {
 	// after query callback
 	var writeToOutput = (err, accts) => {
 
-		var tempArray = [];
-
 	    if (err) {
 	      console.log('error in query! err: ', err);
 	    }
 	    if (accts.length > 0) {
+
+	    	var tempArray = [];
 
 	    	// if multiple matches found
 			accts.forEach(function(acct) {
