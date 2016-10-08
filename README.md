@@ -2,11 +2,16 @@
 
 Takes your CSV file, parses it, and returns a list of same records that exist in database.
 
-###Getting Started###
+###Screenshots
+
+<span width="30px" height="30px"><img src="./src/images/Input.png"></span>
+<span width="30px" height="30px"><img src="./src/images/Output.png"></span>
+
+###Getting Started
 
     npm install
 
-###To Start Server###
+###To Start Server
 
     npm start
 
@@ -14,15 +19,11 @@ Go to:
 
     http://localhost:8080/api/setupAccounts
 
-###To Run Unit Tests###
+###To Run Unit Tests
 
     npm run test
 
-###Notes on Process###
-
-
-
-###Tech Stack###
+###Tech Stack
 
     Node.js
     ES6
