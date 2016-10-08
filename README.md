@@ -6,11 +6,11 @@ Takes your CSV file, parses it, and returns a list of same records that exist in
 
 Input:
 
-<span width="30px" height="30px"><img src="./src/images/Input.png"></span>
+<img src="./src/images/Input.png"></span>
 
 Output:
 
-<span width="30px" height="30px"><img src="./src/images/Output.png"></span>
+<img src="./src/images/Output.png"></span>
 
 Output:
 
