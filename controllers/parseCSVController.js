@@ -14,24 +14,19 @@ module.exports = function() {
 	// after query callback
 	var writeToOutput = (err, accts) => {
 
+		var tempArray = [];
+
 	    if (err) {
 	      console.log('error in query! err: ', err);
 	    }
 	    if (accts.length > 0) {
 
-			// multiple matches found
-			for (var i = 0; i < accts.length; i++) {
+	    	// if multiple matches found
+			accts.forEach(function(acct) {
+				tempArray.push(acct.id);
+			});
 
-				writable.write(`${accts[i].id}`);
-
-				// only add comma if more matches per row
-		        if ( accts[i + 1] !== undefined ) {
-					writable.write(', ');
-		        }
-			}
-
-			// insert new line after ea row
-			writable.write( '\n' ); 
+			writable.write(tempArray.join(', ') + '\n');
 	    }
 	    else {
 
@@ -45,10 +40,10 @@ module.exports = function() {
 
 		yield Account.find({
 				$or: [
-						{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
-						{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
-						{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
-					]}, 'id name urls', writeToOutput);
+					{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
+					{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
+					{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
+				]}, 'id name urls', writeToOutput);
   	};
 
   	// parse csv
