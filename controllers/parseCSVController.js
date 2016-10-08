@@ -18,14 +18,10 @@ module.exports = function() {
 	      console.log('error in query! err: ', err);
 	    }
 	    if (accts.length > 0) {
-
 	    	var tempArray = accts.map(function(acct) { return acct.id; });
-
 	    	writable.write(tempArray.join(', ') + '\n');
 	    }
 	    else {
-
-	    	// if query returned no records
 	      	writable.write( '\n' ); 
 	    }
   	};
@@ -34,11 +30,11 @@ module.exports = function() {
   	function *findMatches(data) {
 
 		yield Account.find({
-				$or: [
-					{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
-					{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
-					{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
-				]}, 'id', writeToOutput);
+			$or: [
+				{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
+				{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
+				{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
+			]}, 'id', writeToOutput);
   	};
 
   	// parse csv
