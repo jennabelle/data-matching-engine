@@ -38,7 +38,7 @@ module.exports = function() {
 					{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
 					{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
 					{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
-				]}, 'id name urls', writeToOutput);
+				]}, 'id', writeToOutput);
   	};
 
   	// parse csv
