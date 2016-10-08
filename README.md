@@ -12,9 +12,6 @@ Output:
 
 <img src="./src/images/Output.png"></span>
 
-Output:
-
-
 ###Getting Started
 
     npm install

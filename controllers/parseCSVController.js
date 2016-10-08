@@ -19,14 +19,9 @@ module.exports = function() {
 	    }
 	    if (accts.length > 0) {
 
-	    	var tempArray = [];
+	    	var tempArray = accts.map(function(acct) { return acct.id; });
 
-	    	// if multiple matches found
-			accts.forEach(function(acct) {
-				tempArray.push(acct.id);
-			});
-
-			writable.write(tempArray.join(', ') + '\n');
+	    	writable.write(tempArray.join(', ') + '\n');
 	    }
 	    else {
 
