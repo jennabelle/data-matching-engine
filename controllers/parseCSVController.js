@@ -22,7 +22,7 @@ module.exports = function() {
 			// multiple matches found
 			for (var i = 0; i < accts.length; i++) {
 
-				writable.write(`id: ${accts[i].id}, name: ${accts[i].name}, urls: ${accts[i].urls}`);
+				writable.write(`id: ${accts[i].id}`);
 
 				// only add comma if more matches per row
 		        if ( accts[i + 1] !== undefined ) {
@@ -49,25 +49,12 @@ module.exports = function() {
 						{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
 						{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
 					]}, 'id name urls', writeToOutput);
-
-		// yield Account.find({
-		// 		$and: [
-		// 			{ 	$or: [
-		// 					{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
-		// 					{ corporate_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } },
-		// 					{ fka_names: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) ] } }
-		// 				]
-		// 			},
-		// 			{
-		// 				urls: { $in: [ new RegExp( RegExHelper.escapeRegEx(data.URL), "i" ) ] }
-		// 			}
-		// 		]}, 'id name urls', writeToOutput);
   	};
 
   	// parse csv
   	csv
     	.fromStream(readable, { headers: true })
-    	.on('data', data => { console.log('data.Name: ', data.Name, ' data.URL: ', data.URL);
+    	.on('data', data => {
 
     		// call generator
     		const gen = findMatches(data);
