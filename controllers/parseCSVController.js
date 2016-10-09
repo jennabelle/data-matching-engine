@@ -11,6 +11,7 @@ module.exports = function() {
 	writable.write('Matches\n');
 
 	var writeToOutput = (err, accts) => {
+
 	    if (err) {
 	      console.log('error in query! err: ', err);
 	    }
@@ -24,7 +25,8 @@ module.exports = function() {
   	};
 
   	// generator to handle async calls in synchronous way
-  	const findMatches = function*(data) {
+  	const findMatches = function* (data) {
+  		
 		yield Account.find({
 			$or: [
 				{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
