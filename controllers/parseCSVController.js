@@ -24,7 +24,7 @@ module.exports = function() {
   	};
 
   	// generator to handle async calls in synchronous way
-  	function *findMatches(data) {
+  	const findMatches = function*(data) {
 		yield Account.find({
 			$or: [
 				{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
