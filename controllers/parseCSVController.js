@@ -3,7 +3,7 @@ const fs = require('fs');
 const Account = require('../db/models/account.js');
 const RegExHelper = require('../helpers/helper_regex.js');
 
-module.exports = function() {
+module.exports = () => {
 
 	var readable = fs.createReadStream(__dirname + '/../data/crm.csv');
   	var writable = fs.createWriteStream(__dirname + '/../data/output.txt');
@@ -16,7 +16,7 @@ module.exports = function() {
 	      console.log('error in query! err: ', err);
 	    }
 	    if (accts.length > 0) {
-	    	var tempArray = accts.map( acct => { return acct.id; } );
+	    	var tempArray = accts.map( acct => acct.id );
 	    	writable.write(tempArray.join(', ') + '\n');
 	    }
 	    else {
@@ -40,11 +40,9 @@ module.exports = function() {
     	.fromStream(readable, { headers: true })
     	.on('data', data => {
 
-    		// call generator
+    		// call generator instance
     		const gen = findMatches(data);
     		gen.next();
     	})
-    	.on('end', () => {
-      		console.log('done!');
-    	});
+    	.on('end', () => console.log('done!'));
 };
