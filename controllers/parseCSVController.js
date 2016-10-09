@@ -8,12 +8,9 @@ module.exports = function() {
 	var readable = fs.createReadStream(__dirname + '/../data/crm.csv');
   	var writable = fs.createWriteStream(__dirname + '/../data/output.txt');
 
-	// first line should be 'Matches'
 	writable.write('Matches\n');
 
-	// after query callback
 	var writeToOutput = (err, accts) => {
-
 	    if (err) {
 	      console.log('error in query! err: ', err);
 	    }
@@ -28,7 +25,6 @@ module.exports = function() {
 
   	// generator to handle async calls in synchronous way
   	function *findMatches(data) {
-
 		yield Account.find({
 			$or: [
 				{ name: new RegExp( RegExHelper.escapeRegEx(data.Name), "i" ) },
