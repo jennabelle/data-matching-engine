@@ -1,6 +1,6 @@
 # Data Matching Engine
 
-Takes your CSV file, parses it, and writes to output.txt a list of matching records in database.
+Takes your CSV, parses it, and writes to output.txt a list of matching records in database, in the same line order.
 
 ###Screenshots
 
