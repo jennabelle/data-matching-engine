@@ -2,7 +2,7 @@
 
 Takes your CSV, parses it, and writes to output.txt a list of matching records in database, in the same line order.
 
-###Screenshots
+### Screenshots
 
 Input:
 
@@ -12,11 +12,11 @@ Output:
 
 <img src="./src/images/Output.png"></span>
 
-###Getting Started
+### Getting Started
 
     npm install
 
-###To Start Server
+### To Start Server
 
     npm start
 
@@ -28,11 +28,11 @@ Check that matching records are displayed. Go to:
 
     db/output.txt
 
-###To Run Unit Tests
+### To Run Unit Tests
 
     npm run test
 
-###Tech Stack
+### Tech Stack
 
     Node.js
     ES6
